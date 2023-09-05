@@ -1,0 +1,2 @@
+# StructRand
+Log of StructRand
