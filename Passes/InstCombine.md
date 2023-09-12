@@ -139,11 +139,11 @@ define dso_local i32 @main() local_unnamed_addr #3 !dbg !38 {
   %7 = getelementptr inbounds [3 x %struct.number], ptr %1, i32 0, i32 2, !dbg !58
   %8 = getelementptr inbounds %struct.complex, ptr %7, i32 0, i32 1, !dbg !58
   store i32 12, ptr %8, align 4, !dbg !58
-  %9 = getelementptr inbounds %struct.number, ptr %7, i32 0, i32 1, !dbg !58
+  (合并前指令)%9 = getelementptr inbounds %struct.number, ptr %7, i32 0, i32 1, !dbg !58(无TBAA)
   store i32 40, ptr %9, align 8, !dbg !58
   %10 = getelementptr inbounds [3 x %struct.number], ptr %1, i64 0, i64 1, !dbg !59
   call void @llvm.dbg.value(metadata ptr %10, metadata !55, metadata !DIExpression()), !dbg !60
-  %11 = getelementptr inbounds %struct.number, ptr %10, i32 0, i32 1, !dbg !61, !tbaa !62
+  (合并前指令)%11 = getelementptr inbounds %struct.number, ptr %10, i32 0, i32 1, !dbg !61, !tbaa !62(有TBAA)
   call void @load_test(ptr noundef %11), !dbg !66
   call void @llvm.lifetime.end.p0(i64 36, ptr %1) #7, !dbg !67
   ret i32 0, !dbg !68
@@ -167,7 +167,7 @@ define dso_local i32 @main() local_unnamed_addr #3 !dbg !38 {
   %7 = getelementptr inbounds [3 x %struct.number], ptr %1, i64 0, i64 2, i32 1, !dbg !58
   store i32 40, ptr %7, align 16, !dbg !58
   call void @llvm.dbg.value(metadata ptr %1, metadata !55, metadata !DIExpression(DW_OP_plus_uconst, 12, DW_OP_stack_value)), !dbg !59
-  %8 = getelementptr inbounds [3 x %struct.number], ptr %1, i64 0, i64 1, i32 1, !dbg !60
+  (合并后指令)%8 = getelementptr inbounds [3 x %struct.number], ptr %1, i64 0, i64 1, i32 1, !dbg !60(无TBAA)
   call void @load_test(ptr noundef nonnull %8), !dbg !61
   call void @llvm.lifetime.end.p0(i64 36, ptr nonnull %1) #7, !dbg !62
   ret i32 0, !dbg !63
